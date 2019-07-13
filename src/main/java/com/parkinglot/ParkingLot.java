@@ -68,7 +68,7 @@ public class ParkingLot {
             System.out.print("Please give me your ticket!");
             return null;
         } else {
-            System.out.print("It is an invalid ticket!");
+            System.out.print("Unrecognized parking ticket.");
             return null;
         }
     }

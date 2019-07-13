@@ -105,7 +105,7 @@ public class ParkingBoyTest {
         //when
         Car fetchCar = parkingBoy.fetchCarByTickey(parkingLot, parkingTicket2);
         //then
-        assertThat(systemOut(), is("It is an invalid ticket!"));
+        assertThat(systemOut(), is("Unrecognized parking ticket."));
         assertThat(fetchCar,nullValue());
     }
 
