@@ -20,6 +20,10 @@ public class ParkingLot {
         return capacity;
     }
 
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
     public HashMap<ParkingTicket, Car> getTicketMatchCar() {
         return ticketMatchCar;
     }
@@ -29,12 +33,17 @@ public class ParkingLot {
     }
 
     public ParkingTicket generateTicketByCar(Car car) {
+        if (isParkingFull()){
+            System.out.print("Sorry, parkingLot is full!");
+            return null;
+        }
         if (ticketMatchCar.containsKey(car.getCarLicense())) {
             System.out.print("Car is in the parkingLot！");
             return null;
         } else {
             ParkingTicket parkingTicket = new ParkingTicket(car.getCarLicense());
             ticketMatchCar.put(parkingTicket, car);
+            capacity += 1;
             if (ticketIsUsed.containsKey(car.getCarLicense())){
                 ticketIsUsed.put(car.getCarLicense(), false);
             }else{
@@ -49,6 +58,7 @@ public class ParkingLot {
             if (!ticketIsUsed.get(parkingTicket.getCarLicense())) {
                 Car car = ticketMatchCar.get(parkingTicket);
                 ticketIsUsed.put(parkingTicket.getCarLicense(), true);
+                capacity -= 1;
                 return car;
             } else {
                 System.out.print("Sorry, your ticket is uesd!");
@@ -61,6 +71,10 @@ public class ParkingLot {
             System.out.print("It is an invalid ticket!");
             return null;
         }
+    }
+
+    private boolean isParkingFull() {
+        return capacity > 0 ? false : true;
     }
 
 }

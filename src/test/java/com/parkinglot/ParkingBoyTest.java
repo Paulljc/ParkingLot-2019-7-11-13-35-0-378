@@ -8,6 +8,7 @@ import java.io.PrintStream;
 import java.util.HashMap;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ParkingBoyTest {
@@ -105,6 +106,7 @@ public class ParkingBoyTest {
         Car fetchCar = parkingBoy.fetchCarByTickey(parkingLot, parkingTicket2);
         //then
         assertThat(systemOut(), is("It is an invalid ticket!"));
+        assertThat(fetchCar,nullValue());
     }
 
     @Test
@@ -122,5 +124,20 @@ public class ParkingBoyTest {
         Car fetchCar = parkingBoy.fetchCarByTickey(parkingLot, parkingTicket2);
         //then
         assertThat(systemOut(), is("Please give me your ticket!"));
+        assertThat(fetchCar,nullValue());
+    }
+
+    @Test
+    public void should_not_fetch_ticket_if_parkingLot_is_full(){
+        //given
+        Car car = new Car("9527");
+        ParkingLot parkingLot = new ParkingLot(10, new HashMap<>(0), new HashMap<>(0));
+        parkingLot.setCapacity(0);
+        ParkingBoy parkingBoy = new ParkingBoy();
+        //when
+        Object parkingTicket = parkingBoy.fetchTicketByCar(parkingLot, car);
+        //then
+        assertThat(systemOut(), is("Sorry, parkingLot is full!"));
+        assertThat(parkingTicket,nullValue());
     }
 }
