@@ -27,7 +27,7 @@ public class ParkingBoyTest {
     public void should_fetch_ticket_by_car(){
         //given
         Car car = new Car("9527");
-        ParkingLot parkingLot = new ParkingLot(10, new HashMap<>(0));
+        ParkingLot parkingLot = new ParkingLot(10, new HashMap<>(0), new HashMap<>(0));
         ParkingBoy parkingBoy = new ParkingBoy();
         //when
         String parkingTicket = parkingBoy.fetchTicketByCar(parkingLot, car).getCarLicense();
@@ -41,8 +41,10 @@ public class ParkingBoyTest {
         ParkingTicket parkingTicket = new ParkingTicket("9527");
         Car car = new Car("9527");
         HashMap<ParkingTicket, Car> ticketMatchCar = new HashMap<>(0);
+        HashMap<String, Boolean> ticketIsUsed = new HashMap<>(0);
         ticketMatchCar.put(parkingTicket, car);
-        ParkingLot parkingLot = new ParkingLot(10, ticketMatchCar);
+        ticketIsUsed.put("9527", false);
+        ParkingLot parkingLot = new ParkingLot(10, ticketMatchCar, ticketIsUsed);
         ParkingBoy parkingBoy = new ParkingBoy();
         //when
         Car fetchCar = parkingBoy.fetchCarByTickey(parkingLot, parkingTicket);
@@ -55,7 +57,7 @@ public class ParkingBoyTest {
         //given
         Car car1 = new Car("9527");
         Car car2 = new Car("8080");
-        ParkingLot parkingLot = new ParkingLot(10, new HashMap<>(0));
+        ParkingLot parkingLot = new ParkingLot(10, new HashMap<>(0), new HashMap<>(0));
         ParkingBoy parkingBoy = new ParkingBoy();
         //when
         String parkingTicket1 = parkingBoy.fetchTicketByCar(parkingLot, car1).getCarLicense();
@@ -73,9 +75,12 @@ public class ParkingBoyTest {
         Car car1 = new Car("9527");
         Car car2 = new Car("8080");
         HashMap<ParkingTicket, Car> ticketMatchCar = new HashMap<>(0);
+        HashMap<String, Boolean> ticketIsUsed = new HashMap<>(0);
         ticketMatchCar.put(parkingTicket1, car1);
         ticketMatchCar.put(parkingTicket2, car2);
-        ParkingLot parkingLot = new ParkingLot(10, ticketMatchCar);
+        ticketIsUsed.put("9527", false);
+        ticketIsUsed.put("8080", false);
+        ParkingLot parkingLot = new ParkingLot(10, ticketMatchCar, ticketIsUsed);
         ParkingBoy parkingBoy = new ParkingBoy();
         //when
         Car fetchCar1 = parkingBoy.fetchCarByTickey(parkingLot, parkingTicket1);
@@ -92,8 +97,9 @@ public class ParkingBoyTest {
         ParkingTicket parkingTicket2 = new ParkingTicket("8080");
         Car car = new Car("9527");
         HashMap<ParkingTicket, Car> ticketMatchCar = new HashMap<>(0);
+        HashMap<String, Boolean> ticketIsUsed = new HashMap<>(0);
         ticketMatchCar.put(parkingTicket1, car);
-        ParkingLot parkingLot = new ParkingLot(10, ticketMatchCar);
+        ParkingLot parkingLot = new ParkingLot(10, ticketMatchCar, ticketIsUsed);
         ParkingBoy parkingBoy = new ParkingBoy();
         //when
         Car fetchCar = parkingBoy.fetchCarByTickey(parkingLot, parkingTicket2);
@@ -108,8 +114,9 @@ public class ParkingBoyTest {
         ParkingTicket parkingTicket2 = null;
         Car car = new Car("9527");
         HashMap<ParkingTicket, Car> ticketMatchCar = new HashMap<>(0);
+        HashMap<String, Boolean> ticketIsUsed = new HashMap<>(0);
         ticketMatchCar.put(parkingTicket1, car);
-        ParkingLot parkingLot = new ParkingLot(10, ticketMatchCar);
+        ParkingLot parkingLot = new ParkingLot(10, ticketMatchCar, ticketIsUsed);
         ParkingBoy parkingBoy = new ParkingBoy();
         //when
         Car fetchCar = parkingBoy.fetchCarByTickey(parkingLot, parkingTicket2);
