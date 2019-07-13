@@ -27,9 +27,18 @@ public class ParkingLot {
     }
 
     public Car TakeOutCarByTicket(ParkingTicket parkingTicket){
-        Car car = ticketMatchCar.get(parkingTicket);
-        ticketMatchCar.remove(parkingTicket);
-        return car;
+        if (ticketMatchCar.containsKey(parkingTicket)){
+            Car car = ticketMatchCar.get(parkingTicket);
+            ticketMatchCar.remove(parkingTicket);
+            return car;
+        }else if (parkingTicket == null){
+            System.out.print("Please give me your ticket!");
+            return null;
+        }
+        else{
+            System.out.print("It is an invalid ticket!");
+            return null;
+        }
     }
 
 }

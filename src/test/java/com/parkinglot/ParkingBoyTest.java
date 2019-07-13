@@ -1,13 +1,27 @@
 package com.parkinglot;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.HashMap;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ParkingBoyTest {
+
+    private ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+
+    @BeforeEach
+    public void setup() {
+        System.setOut(new PrintStream(outContent));
+    }
+
+    private String systemOut() {
+        return outContent.toString();
+    }
 
     @Test
     public void should_fetch_ticket_by_car(){
@@ -71,4 +85,35 @@ public class ParkingBoyTest {
         assertThat(fetchCar2.getCarLicense(), is("8080"));
     }
 
+    @Test
+    public void should_not_fetch_car_if_ticket_invalid(){
+        //given
+        ParkingTicket parkingTicket1 = new ParkingTicket("9527");
+        ParkingTicket parkingTicket2 = new ParkingTicket("8080");
+        Car car = new Car("9527");
+        HashMap<ParkingTicket, Car> ticketMatchCar = new HashMap<>(0);
+        ticketMatchCar.put(parkingTicket1, car);
+        ParkingLot parkingLot = new ParkingLot(10, ticketMatchCar);
+        ParkingBoy parkingBoy = new ParkingBoy();
+        //when
+        Car fetchCar = parkingBoy.fetchCarByTickey(parkingLot, parkingTicket2);
+        //then
+        assertThat(systemOut(), is("It is an invalid ticket!"));
+    }
+
+    @Test
+    public void should_not_fetch_car_if_no_ticket(){
+        //given
+        ParkingTicket parkingTicket1 = new ParkingTicket("9527");
+        ParkingTicket parkingTicket2 = null;
+        Car car = new Car("9527");
+        HashMap<ParkingTicket, Car> ticketMatchCar = new HashMap<>(0);
+        ticketMatchCar.put(parkingTicket1, car);
+        ParkingLot parkingLot = new ParkingLot(10, ticketMatchCar);
+        ParkingBoy parkingBoy = new ParkingBoy();
+        //when
+        Car fetchCar = parkingBoy.fetchCarByTickey(parkingLot, parkingTicket2);
+        //then
+        assertThat(systemOut(), is("Please give me your ticket!"));
+    }
 }
