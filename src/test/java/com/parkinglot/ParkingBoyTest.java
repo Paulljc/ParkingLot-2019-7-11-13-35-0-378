@@ -123,7 +123,7 @@ public class ParkingBoyTest {
         //when
         Car fetchCar = parkingBoy.fetchCarByTickey(parkingLot, parkingTicket2);
         //then
-        assertThat(systemOut(), is("Please give me your ticket!"));
+        assertThat(systemOut(), is("Please provide your parking ticket."));
         assertThat(fetchCar,nullValue());
     }
 
@@ -137,7 +137,7 @@ public class ParkingBoyTest {
         //when
         Object parkingTicket = parkingBoy.fetchTicketByCar(parkingLot, car);
         //then
-        assertThat(systemOut(), is("Sorry, parkingLot is full!"));
+        assertThat(systemOut(), is("Not enough position."));
         assertThat(parkingTicket,nullValue());
     }
 }

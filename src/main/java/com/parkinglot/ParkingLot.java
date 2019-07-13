@@ -34,7 +34,7 @@ public class ParkingLot {
 
     public ParkingTicket generateTicketByCar(Car car) {
         if (isParkingFull()){
-            System.out.print("Sorry, parkingLot is full!");
+            System.out.print("Not enough position.");
             return null;
         }
         if (ticketMatchCar.containsKey(car.getCarLicense())) {
@@ -65,7 +65,7 @@ public class ParkingLot {
                 return null;
             }
         } else if (parkingTicket == null) {
-            System.out.print("Please give me your ticket!");
+            System.out.print("Please provide your parking ticket.");
             return null;
         } else {
             System.out.print("Unrecognized parking ticket.");
