@@ -23,15 +23,12 @@ public class ParkingLot {
     public ParkingTicket generateTicketByCar(Car car){
         ParkingTicket parkingTicket = new ParkingTicket(car.getCarLicense());
         ticketMatchCar.put(parkingTicket, car);
-        System.out.println(ticketMatchCar);
         return parkingTicket;
     }
 
     public Car TakeOutCarByTicket(ParkingTicket parkingTicket){
-        System.out.println(ticketMatchCar);
         Car car = ticketMatchCar.get(parkingTicket);
         ticketMatchCar.remove(parkingTicket);
-        System.out.println(ticketMatchCar);
         return car;
     }
 
