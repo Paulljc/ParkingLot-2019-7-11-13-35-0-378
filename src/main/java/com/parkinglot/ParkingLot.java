@@ -63,21 +63,20 @@ public class ParkingLot {
             capacity += 1;
             return car;
         } else {
-            System.out.print("Sorry, your ticket is uesd!");
+            System.out.print("Sorry, your ticket has uesd!");
             return null;
         }
     }
 
     public boolean isParkingFull() {
-        return capacity > 0 ? false : true;
+        return capacity <= 0;
     }
 
     public boolean checkCarIsInParkingLot(ParkingTicket parkingTicket) {
-        return ticketMatchCar.containsKey(parkingTicket) ? true : false;
+        return ticketMatchCar.containsKey(parkingTicket);
     }
 
     public double culParkingRates() {
-        double rate = (double) this.capacity / (double) this.totalCapacity;
-        return rate;
+        return (double) this.capacity / (double) this.totalCapacity;
     }
 }
