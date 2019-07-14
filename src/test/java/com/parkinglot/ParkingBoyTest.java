@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -29,9 +30,11 @@ public class ParkingBoyTest {
         //given
         Car car = new Car("9527");
         ParkingLot parkingLot = new ParkingLot(10, new HashMap<>(0), new HashMap<>(0));
-        ParkingBoy parkingBoy = new ParkingBoy();
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
+        parkingLots.add(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         //when
-        String parkingTicket = parkingBoy.fetchTicketByCar(parkingLot, car).getCarLicense();
+        String parkingTicket = parkingBoy.fetchTicketByCar(car).getCarLicense();
         //then
         assertThat(parkingTicket, is("9527"));
     }
@@ -46,7 +49,9 @@ public class ParkingBoyTest {
         ticketMatchCar.put(parkingTicket, car);
         ticketIsUsed.put("9527", false);
         ParkingLot parkingLot = new ParkingLot(10, ticketMatchCar, ticketIsUsed);
-        ParkingBoy parkingBoy = new ParkingBoy();
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
+        parkingLots.add(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         //when
         Car fetchCar = parkingBoy.fetchCarByTickey(parkingLot, parkingTicket);
         //then
@@ -59,10 +64,12 @@ public class ParkingBoyTest {
         Car car1 = new Car("9527");
         Car car2 = new Car("8080");
         ParkingLot parkingLot = new ParkingLot(10, new HashMap<>(0), new HashMap<>(0));
-        ParkingBoy parkingBoy = new ParkingBoy();
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
+        parkingLots.add(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         //when
-        String parkingTicket1 = parkingBoy.fetchTicketByCar(parkingLot, car1).getCarLicense();
-        String parkingTicket2 = parkingBoy.fetchTicketByCar(parkingLot, car2).getCarLicense();
+        String parkingTicket1 = parkingBoy.fetchTicketByCar(car1).getCarLicense();
+        String parkingTicket2 = parkingBoy.fetchTicketByCar(car2).getCarLicense();
         //then
         assertThat(parkingTicket1, is("9527"));
         assertThat(parkingTicket2, is("8080"));
@@ -82,7 +89,9 @@ public class ParkingBoyTest {
         ticketIsUsed.put("9527", false);
         ticketIsUsed.put("8080", false);
         ParkingLot parkingLot = new ParkingLot(10, ticketMatchCar, ticketIsUsed);
-        ParkingBoy parkingBoy = new ParkingBoy();
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
+        parkingLots.add(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         //when
         Car fetchCar1 = parkingBoy.fetchCarByTickey(parkingLot, parkingTicket1);
         Car fetchCar2 = parkingBoy.fetchCarByTickey(parkingLot, parkingTicket2);
@@ -101,7 +110,9 @@ public class ParkingBoyTest {
         HashMap<String, Boolean> ticketIsUsed = new HashMap<>(0);
         ticketMatchCar.put(parkingTicket1, car);
         ParkingLot parkingLot = new ParkingLot(10, ticketMatchCar, ticketIsUsed);
-        ParkingBoy parkingBoy = new ParkingBoy();
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
+        parkingLots.add(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         //when
         Car fetchCar = parkingBoy.fetchCarByTickey(parkingLot, parkingTicket2);
         //then
@@ -119,7 +130,9 @@ public class ParkingBoyTest {
         HashMap<String, Boolean> ticketIsUsed = new HashMap<>(0);
         ticketMatchCar.put(parkingTicket1, car);
         ParkingLot parkingLot = new ParkingLot(10, ticketMatchCar, ticketIsUsed);
-        ParkingBoy parkingBoy = new ParkingBoy();
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
+        parkingLots.add(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         //when
         Car fetchCar = parkingBoy.fetchCarByTickey(parkingLot, parkingTicket2);
         //then
@@ -133,11 +146,30 @@ public class ParkingBoyTest {
         Car car = new Car("9527");
         ParkingLot parkingLot = new ParkingLot(10, new HashMap<>(0), new HashMap<>(0));
         parkingLot.setCapacity(0);
-        ParkingBoy parkingBoy = new ParkingBoy();
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
+        parkingLots.add(parkingLot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         //when
-        Object parkingTicket = parkingBoy.fetchTicketByCar(parkingLot, car);
+        Object parkingTicket = parkingBoy.fetchTicketByCar(car);
         //then
         assertThat(systemOut(), is("Not enough position."));
         assertThat(parkingTicket,nullValue());
+    }
+
+    @Test
+    public void should_park_second_parkingLot_if_first_parkingLot_is_full(){
+        //given
+        Car car = new Car("9527");
+        ParkingLot parkingLot1 = new ParkingLot(10, new HashMap<>(0), new HashMap<>(0));
+        ParkingLot parkingLot2 = new ParkingLot(10, new HashMap<>(0), new HashMap<>(0));
+        parkingLot1.setCapacity(0);
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
+        parkingLots.add(parkingLot1);
+        parkingLots.add(parkingLot2);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        //when
+        String parkingTicket = parkingBoy.fetchTicketByCar(car).getCarLicense();
+        //then
+        assertThat(parkingTicket, is("9527"));
     }
 }
