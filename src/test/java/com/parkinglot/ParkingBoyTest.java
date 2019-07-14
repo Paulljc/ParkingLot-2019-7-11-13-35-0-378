@@ -53,7 +53,7 @@ public class ParkingBoyTest {
         parkingLots.add(parkingLot);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         //when
-        Car fetchCar = parkingBoy.fetchCarByTickey(parkingLot, parkingTicket);
+        Car fetchCar = parkingBoy.fetchCarByTickey(parkingTicket);
         //then
         assertThat(fetchCar.getCarLicense(), is("9527"));
     }
@@ -93,8 +93,8 @@ public class ParkingBoyTest {
         parkingLots.add(parkingLot);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         //when
-        Car fetchCar1 = parkingBoy.fetchCarByTickey(parkingLot, parkingTicket1);
-        Car fetchCar2 = parkingBoy.fetchCarByTickey(parkingLot, parkingTicket2);
+        Car fetchCar1 = parkingBoy.fetchCarByTickey(parkingTicket1);
+        Car fetchCar2 = parkingBoy.fetchCarByTickey(parkingTicket2);
         //then
         assertThat(fetchCar1.getCarLicense(), is("9527"));
         assertThat(fetchCar2.getCarLicense(), is("8080"));
@@ -114,7 +114,7 @@ public class ParkingBoyTest {
         parkingLots.add(parkingLot);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         //when
-        Car fetchCar = parkingBoy.fetchCarByTickey(parkingLot, parkingTicket2);
+        Car fetchCar = parkingBoy.fetchCarByTickey(parkingTicket2);
         //then
         assertThat(systemOut(), is("Unrecognized parking ticket."));
         assertThat(fetchCar,nullValue());
@@ -134,7 +134,7 @@ public class ParkingBoyTest {
         parkingLots.add(parkingLot);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         //when
-        Car fetchCar = parkingBoy.fetchCarByTickey(parkingLot, parkingTicket2);
+        Car fetchCar = parkingBoy.fetchCarByTickey(parkingTicket2);
         //then
         assertThat(systemOut(), is("Please provide your parking ticket."));
         assertThat(fetchCar,nullValue());
@@ -171,5 +171,28 @@ public class ParkingBoyTest {
         String parkingTicket = parkingBoy.fetchTicketByCar(car).getCarLicense();
         //then
         assertThat(parkingTicket, is("9527"));
+    }
+
+    @Test
+    public void should_fetch_car_by_ticket_in_different_paarkingLot(){
+        //given
+        ParkingTicket parkingTicket = new ParkingTicket("9527");
+        Car car = new Car("9527");
+        HashMap<ParkingTicket, Car> ticketMatchCar1 = new HashMap<>(0);
+        HashMap<String, Boolean> ticketIsUsed1 = new HashMap<>(0);
+        HashMap<ParkingTicket, Car> ticketMatchCar2 = new HashMap<>(0);
+        HashMap<String, Boolean> ticketIsUsed2 = new HashMap<>(0);
+        ticketMatchCar2.put(parkingTicket, car);
+        ticketIsUsed2.put("9527", false);
+        ParkingLot parkingLot1 = new ParkingLot(10, ticketMatchCar1, ticketIsUsed1);
+        ParkingLot parkingLot2 = new ParkingLot(10, ticketMatchCar2, ticketIsUsed2);
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
+        parkingLots.add(parkingLot1);
+        parkingLots.add(parkingLot2);
+        ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
+        //when
+        Car fetchCar = parkingBoy.fetchCarByTickey(parkingTicket);
+        //then
+        assertThat(fetchCar.getCarLicense(), is("9527"));
     }
 }

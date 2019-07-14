@@ -40,9 +40,9 @@ public class ParkingLot {
             ParkingTicket parkingTicket = new ParkingTicket(car.getCarLicense());
             ticketMatchCar.put(parkingTicket, car);
             capacity -= 1;
-            if (ticketIsUsed.containsKey(car.getCarLicense())){
+            if (ticketIsUsed.containsKey(car.getCarLicense())) {
                 ticketIsUsed.put(car.getCarLicense(), false);
-            }else{
+            } else {
                 ticketIsUsed.put(car.getCarLicense(), false);
             }
             return parkingTicket;
@@ -50,21 +50,13 @@ public class ParkingLot {
     }
 
     public Car TakeOutCarByTicket(ParkingTicket parkingTicket) {
-        if (ticketMatchCar.containsKey(parkingTicket)) {
-            if (!ticketIsUsed.get(parkingTicket.getCarLicense())) {
-                Car car = ticketMatchCar.get(parkingTicket);
-                ticketIsUsed.put(parkingTicket.getCarLicense(), true);
-                capacity += 1;
-                return car;
-            } else {
-                System.out.print("Sorry, your ticket is uesd!");
-                return null;
-            }
-        } else if (parkingTicket == null) {
-            System.out.print("Please provide your parking ticket.");
-            return null;
+        if (!ticketIsUsed.get(parkingTicket.getCarLicense())) {
+            Car car = ticketMatchCar.get(parkingTicket);
+            ticketIsUsed.put(parkingTicket.getCarLicense(), true);
+            capacity += 1;
+            return car;
         } else {
-            System.out.print("Unrecognized parking ticket.");
+            System.out.print("Sorry, your ticket is uesd!");
             return null;
         }
     }
@@ -73,4 +65,7 @@ public class ParkingLot {
         return capacity > 0 ? false : true;
     }
 
+    public boolean checkCarIsInParkingLot(ParkingTicket parkingTicket) {
+        return ticketMatchCar.containsKey(parkingTicket) ? true : false;
+    }
 }

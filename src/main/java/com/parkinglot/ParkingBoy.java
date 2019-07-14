@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ParkingBoy {
 
-    ArrayList<ParkingLot> parkingLots = new ArrayList<ParkingLot>();
+    ArrayList<ParkingLot> parkingLots = new ArrayList<>();
 
     public ParkingBoy(ArrayList<ParkingLot> parkingLots) {
         this.parkingLots = parkingLots;
@@ -26,8 +26,23 @@ public class ParkingBoy {
         return null;
     }
 
-    public Car fetchCarByTickey(ParkingLot parkingLot, ParkingTicket parkingTicket){
-        return parkingLot.TakeOutCarByTicket(parkingTicket);
+    public Car fetchCarByTickey(ParkingTicket parkingTicket){
+        if (parkingTicket == null){
+            System.out.print("Please provide your parking ticket.");
+            return null;
+        }
+        for (int i = 0; i < parkingLots.size(); i++) {
+            if (parkingLots.get(i).checkCarIsInParkingLot(parkingTicket)){
+                return parkingLots.get(i).TakeOutCarByTicket(parkingTicket);
+            }else{
+                if (i + 1 < parkingLots.size()){
+                    continue;
+                }else{
+                    break;
+                }
+            }
+        }
+        System.out.print("Unrecognized parking ticket.");
+        return null;
     }
-
 }
