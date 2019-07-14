@@ -26,7 +26,7 @@ public class ParkingBoyTest {
     }
 
     @Test
-    public void should_fetch_ticket_by_car(){
+    public void should_fetch_ticket_by_car() {
         //given
         Car car = new Car("9527");
         ParkingLot parkingLot = new ParkingLot(10, 10, new HashMap<>(0), new HashMap<>(0));
@@ -40,7 +40,7 @@ public class ParkingBoyTest {
     }
 
     @Test
-    public void should_fetch_car_by_ticket(){
+    public void should_fetch_car_by_ticket() {
         //given
         ParkingTicket parkingTicket = new ParkingTicket("9527");
         Car car = new Car("9527");
@@ -59,7 +59,7 @@ public class ParkingBoyTest {
     }
 
     @Test
-    public void should_fetch_corresponding_ticket_by_different_car(){
+    public void should_fetch_corresponding_ticket_by_different_car() {
         //given
         Car car1 = new Car("9527");
         Car car2 = new Car("8080");
@@ -76,7 +76,7 @@ public class ParkingBoyTest {
     }
 
     @Test
-    public void should_fetch_corresponding_car_by_different_ticket(){
+    public void should_fetch_corresponding_car_by_different_ticket() {
         //given
         ParkingTicket parkingTicket1 = new ParkingTicket("9527");
         ParkingTicket parkingTicket2 = new ParkingTicket("8080");
@@ -101,7 +101,7 @@ public class ParkingBoyTest {
     }
 
     @Test
-    public void should_not_fetch_car_if_ticket_invalid(){
+    public void should_not_fetch_car_if_ticket_invalid() {
         //given
         ParkingTicket parkingTicket1 = new ParkingTicket("9527");
         ParkingTicket parkingTicket2 = new ParkingTicket("8080");
@@ -117,11 +117,11 @@ public class ParkingBoyTest {
         Car fetchCar = parkingBoy.fetchCarByTickey(parkingTicket2);
         //then
         assertThat(systemOut(), is("Unrecognized parking ticket."));
-        assertThat(fetchCar,nullValue());
+        assertThat(fetchCar, nullValue());
     }
 
     @Test
-    public void should_not_fetch_car_if_no_ticket(){
+    public void should_not_fetch_car_if_no_ticket() {
         //given
         ParkingTicket parkingTicket1 = new ParkingTicket("9527");
         ParkingTicket parkingTicket2 = null;
@@ -137,11 +137,11 @@ public class ParkingBoyTest {
         Car fetchCar = parkingBoy.fetchCarByTickey(parkingTicket2);
         //then
         assertThat(systemOut(), is("Please provide your parking ticket."));
-        assertThat(fetchCar,nullValue());
+        assertThat(fetchCar, nullValue());
     }
 
     @Test
-    public void should_not_fetch_ticket_if_parkingLot_is_full(){
+    public void should_not_fetch_ticket_if_parkingLot_is_full() {
         //given
         Car car = new Car("9527");
         ParkingLot parkingLot = new ParkingLot(0, 10, new HashMap<>(0), new HashMap<>(0));
@@ -152,11 +152,11 @@ public class ParkingBoyTest {
         ParkingTicket parkingTicket = parkingBoy.fetchTicketByCar(car);
         //then
         assertThat(systemOut(), is("Not enough position."));
-        assertThat(parkingTicket,nullValue());
+        assertThat(parkingTicket, nullValue());
     }
 
     @Test
-    public void should_park_second_parkingLot_if_first_parkingLot_is_full(){
+    public void should_park_second_parkingLot_if_first_parkingLot_is_full() {
         //given
         Car car = new Car("9527");
         ParkingLot parkingLot1 = new ParkingLot(0, 10, new HashMap<>(0), new HashMap<>(0));
@@ -172,7 +172,7 @@ public class ParkingBoyTest {
     }
 
     @Test
-    public void should_fetch_car_by_ticket_in_different_paarkingLot(){
+    public void should_fetch_car_by_ticket_in_different_paarkingLot() {
         //given
         ParkingTicket parkingTicket = new ParkingTicket("9527");
         Car car = new Car("9527");
@@ -195,7 +195,7 @@ public class ParkingBoyTest {
     }
 
     @Test
-    public void should_fetch_ticket_give_car_to_smart_boy(){
+    public void should_fetch_ticket_give_car_to_smart_boy() {
         //given
         Car car = new Car("9527");
         ParkingLot parkingLot1 = new ParkingLot(10, 10, new HashMap<>(0), new HashMap<>(0));
@@ -214,7 +214,7 @@ public class ParkingBoyTest {
     }
 
     @Test
-    public void should_not_fetch_ticket_give_car_to_smart_boy_when_parkinglot_is_all_full(){
+    public void should_not_fetch_ticket_give_car_to_smart_boy_when_parkinglot_is_all_full() {
         //given
         Car car = new Car("9527");
         ParkingLot parkingLot1 = new ParkingLot(0, 10, new HashMap<>(0), new HashMap<>(0));
@@ -231,7 +231,7 @@ public class ParkingBoyTest {
     }
 
     @Test
-    public void should_fetch_ticket_give_car_to_super_smart_boy(){
+    public void should_fetch_ticket_give_car_to_super_smart_boy() {
         //given
         Car car = new Car("9527");
         ParkingLot parkingLot1 = new ParkingLot(5, 10, new HashMap<>(0), new HashMap<>(0));
@@ -250,12 +250,12 @@ public class ParkingBoyTest {
     }
 
     @Test
-    public void should_not_fetch_ticket_give_car_to_super_smart_boy_when_parkinglot_is_all_full(){
+    public void should_not_fetch_ticket_give_car_to_super_smart_boy_when_parkinglot_is_all_full() {
         //given
         Car car = new Car("9527");
         ParkingLot parkingLot1 = new ParkingLot(0, 10, new HashMap<>(0), new HashMap<>(0));
         ParkingLot parkingLot2 = new ParkingLot(0, 12, new HashMap<>(0), new HashMap<>(0));
-        ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>();
         parkingLots.add(parkingLot1);
         parkingLots.add(parkingLot2);
         SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLots);

@@ -76,8 +76,8 @@ public class ParkingLot {
         return ticketMatchCar.containsKey(parkingTicket) ? true : false;
     }
 
-    public double culParkingRates(){
-        double rate = (double)this.capacity / (double)this.totalCapacity;
+    public double culParkingRates() {
+        double rate = (double) this.capacity / (double) this.totalCapacity;
         return rate;
     }
 }

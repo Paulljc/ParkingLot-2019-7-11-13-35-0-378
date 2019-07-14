@@ -10,14 +10,14 @@ public class ParkingBoy {
         this.parkingLots = parkingLots;
     }
 
-    public ParkingTicket fetchTicketByCar(Car car){
+    public ParkingTicket fetchTicketByCar(Car car) {
         for (int i = 0; i < parkingLots.size(); i++) {
-            if (!parkingLots.get(i).isParkingFull()){
+            if (!parkingLots.get(i).isParkingFull()) {
                 return parkingLots.get(i).generateTicketByCar(car);
-            }else{
-                if (i + 1 < parkingLots.size()){
+            } else {
+                if (i + 1 < parkingLots.size()) {
                     continue;
-                }else{
+                } else {
                     break;
                 }
             }
@@ -26,23 +26,31 @@ public class ParkingBoy {
         return null;
     }
 
-    public Car fetchCarByTickey(ParkingTicket parkingTicket){
-        if (parkingTicket == null){
+    public Car fetchCarByTickey(ParkingTicket parkingTicket) {
+        if (parkingTicket == null) {
             System.out.print("Please provide your parking ticket.");
             return null;
         }
         for (int i = 0; i < parkingLots.size(); i++) {
-            if (parkingLots.get(i).checkCarIsInParkingLot(parkingTicket)){
+            if (parkingLots.get(i).checkCarIsInParkingLot(parkingTicket)) {
                 return parkingLots.get(i).TakeOutCarByTicket(parkingTicket);
-            }else{
-                if (i + 1 < parkingLots.size()){
+            } else {
+                if (i + 1 < parkingLots.size()) {
                     continue;
-                }else{
+                } else {
                     break;
                 }
             }
         }
         System.out.print("Unrecognized parking ticket.");
         return null;
+    }
+
+    public ParkingTicket parkCarService(Car car) {
+        return fetchTicketByCar(car);
+    }
+
+    public Car fetchCarService(ParkingTicket parkingTicket) {
+        return fetchCarByTickey(parkingTicket);
     }
 }
