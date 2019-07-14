@@ -7,13 +7,20 @@ import java.util.Map;
 public class ParkingLot {
 
     private int capacity;
+    private int totalCapacity;
     private HashMap<ParkingTicket, Car> ticketMatchCar;
     private HashMap<String, Boolean> ticketIsUsed;
 
-    public ParkingLot(int capacity, HashMap<ParkingTicket, Car> ticketMatchCar, HashMap<String, Boolean> ticketIsUsed) {
+
+    public ParkingLot(int capacity, int totalCapacity, HashMap<ParkingTicket, Car> ticketMatchCar, HashMap<String, Boolean> ticketIsUsed) {
         this.capacity = capacity;
+        this.totalCapacity = totalCapacity;
         this.ticketMatchCar = ticketMatchCar;
         this.ticketIsUsed = ticketIsUsed;
+    }
+
+    public int getTotalCapacity() {
+        return totalCapacity;
     }
 
     public int getCapacity() {
@@ -67,5 +74,10 @@ public class ParkingLot {
 
     public boolean checkCarIsInParkingLot(ParkingTicket parkingTicket) {
         return ticketMatchCar.containsKey(parkingTicket) ? true : false;
+    }
+
+    public double culParkingRates(){
+        double rate = (double)this.capacity / (double)this.totalCapacity;
+        return rate;
     }
 }

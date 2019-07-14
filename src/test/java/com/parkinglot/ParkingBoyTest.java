@@ -29,7 +29,7 @@ public class ParkingBoyTest {
     public void should_fetch_ticket_by_car(){
         //given
         Car car = new Car("9527");
-        ParkingLot parkingLot = new ParkingLot(10, new HashMap<>(0), new HashMap<>(0));
+        ParkingLot parkingLot = new ParkingLot(10, 10, new HashMap<>(0), new HashMap<>(0));
         ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
         parkingLots.add(parkingLot);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
@@ -48,7 +48,7 @@ public class ParkingBoyTest {
         HashMap<String, Boolean> ticketIsUsed = new HashMap<>(0);
         ticketMatchCar.put(parkingTicket, car);
         ticketIsUsed.put("9527", false);
-        ParkingLot parkingLot = new ParkingLot(10, ticketMatchCar, ticketIsUsed);
+        ParkingLot parkingLot = new ParkingLot(10, 10, ticketMatchCar, ticketIsUsed);
         ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
         parkingLots.add(parkingLot);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
@@ -63,7 +63,7 @@ public class ParkingBoyTest {
         //given
         Car car1 = new Car("9527");
         Car car2 = new Car("8080");
-        ParkingLot parkingLot = new ParkingLot(10, new HashMap<>(0), new HashMap<>(0));
+        ParkingLot parkingLot = new ParkingLot(10, 10, new HashMap<>(0), new HashMap<>(0));
         ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
         parkingLots.add(parkingLot);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
@@ -88,7 +88,7 @@ public class ParkingBoyTest {
         ticketMatchCar.put(parkingTicket2, car2);
         ticketIsUsed.put("9527", false);
         ticketIsUsed.put("8080", false);
-        ParkingLot parkingLot = new ParkingLot(10, ticketMatchCar, ticketIsUsed);
+        ParkingLot parkingLot = new ParkingLot(10, 10, ticketMatchCar, ticketIsUsed);
         ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
         parkingLots.add(parkingLot);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
@@ -109,7 +109,7 @@ public class ParkingBoyTest {
         HashMap<ParkingTicket, Car> ticketMatchCar = new HashMap<>(0);
         HashMap<String, Boolean> ticketIsUsed = new HashMap<>(0);
         ticketMatchCar.put(parkingTicket1, car);
-        ParkingLot parkingLot = new ParkingLot(10, ticketMatchCar, ticketIsUsed);
+        ParkingLot parkingLot = new ParkingLot(10, 10, ticketMatchCar, ticketIsUsed);
         ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
         parkingLots.add(parkingLot);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
@@ -129,7 +129,7 @@ public class ParkingBoyTest {
         HashMap<ParkingTicket, Car> ticketMatchCar = new HashMap<>(0);
         HashMap<String, Boolean> ticketIsUsed = new HashMap<>(0);
         ticketMatchCar.put(parkingTicket1, car);
-        ParkingLot parkingLot = new ParkingLot(10, ticketMatchCar, ticketIsUsed);
+        ParkingLot parkingLot = new ParkingLot(10, 10, ticketMatchCar, ticketIsUsed);
         ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
         parkingLots.add(parkingLot);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
@@ -144,13 +144,12 @@ public class ParkingBoyTest {
     public void should_not_fetch_ticket_if_parkingLot_is_full(){
         //given
         Car car = new Car("9527");
-        ParkingLot parkingLot = new ParkingLot(10, new HashMap<>(0), new HashMap<>(0));
-        parkingLot.setCapacity(0);
+        ParkingLot parkingLot = new ParkingLot(0, 10, new HashMap<>(0), new HashMap<>(0));
         ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
         parkingLots.add(parkingLot);
         ParkingBoy parkingBoy = new ParkingBoy(parkingLots);
         //when
-        Object parkingTicket = parkingBoy.fetchTicketByCar(car);
+        ParkingTicket parkingTicket = parkingBoy.fetchTicketByCar(car);
         //then
         assertThat(systemOut(), is("Not enough position."));
         assertThat(parkingTicket,nullValue());
@@ -160,9 +159,8 @@ public class ParkingBoyTest {
     public void should_park_second_parkingLot_if_first_parkingLot_is_full(){
         //given
         Car car = new Car("9527");
-        ParkingLot parkingLot1 = new ParkingLot(10, new HashMap<>(0), new HashMap<>(0));
-        ParkingLot parkingLot2 = new ParkingLot(10, new HashMap<>(0), new HashMap<>(0));
-        parkingLot1.setCapacity(0);
+        ParkingLot parkingLot1 = new ParkingLot(0, 10, new HashMap<>(0), new HashMap<>(0));
+        ParkingLot parkingLot2 = new ParkingLot(10, 10, new HashMap<>(0), new HashMap<>(0));
         ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
         parkingLots.add(parkingLot1);
         parkingLots.add(parkingLot2);
@@ -184,8 +182,8 @@ public class ParkingBoyTest {
         HashMap<String, Boolean> ticketIsUsed2 = new HashMap<>(0);
         ticketMatchCar2.put(parkingTicket, car);
         ticketIsUsed2.put("9527", false);
-        ParkingLot parkingLot1 = new ParkingLot(10, ticketMatchCar1, ticketIsUsed1);
-        ParkingLot parkingLot2 = new ParkingLot(10, ticketMatchCar2, ticketIsUsed2);
+        ParkingLot parkingLot1 = new ParkingLot(10, 10, ticketMatchCar1, ticketIsUsed1);
+        ParkingLot parkingLot2 = new ParkingLot(10, 10, ticketMatchCar2, ticketIsUsed2);
         ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
         parkingLots.add(parkingLot1);
         parkingLots.add(parkingLot2);
@@ -200,9 +198,9 @@ public class ParkingBoyTest {
     public void should_fetch_ticket_give_car_to_smart_boy(){
         //given
         Car car = new Car("9527");
-        ParkingLot parkingLot1 = new ParkingLot(10, new HashMap<>(0), new HashMap<>(0));
-        ParkingLot parkingLot2 = new ParkingLot(11, new HashMap<>(0), new HashMap<>(0));
-        ParkingLot parkingLot3 = new ParkingLot(12, new HashMap<>(0), new HashMap<>(0));
+        ParkingLot parkingLot1 = new ParkingLot(10, 10, new HashMap<>(0), new HashMap<>(0));
+        ParkingLot parkingLot2 = new ParkingLot(11, 11, new HashMap<>(0), new HashMap<>(0));
+        ParkingLot parkingLot3 = new ParkingLot(12, 12, new HashMap<>(0), new HashMap<>(0));
         ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
         parkingLots.add(parkingLot1);
         parkingLots.add(parkingLot2);
@@ -216,19 +214,53 @@ public class ParkingBoyTest {
     }
 
     @Test
-    public void should_not_fetch_ticket_give_car_to_smart_boy_when_parkinglot_is_full(){
+    public void should_not_fetch_ticket_give_car_to_smart_boy_when_parkinglot_is_all_full(){
         //given
         Car car = new Car("9527");
-        ParkingLot parkingLot1 = new ParkingLot(10, new HashMap<>(0), new HashMap<>(0));
-        ParkingLot parkingLot2 = new ParkingLot(12, new HashMap<>(0), new HashMap<>(0));
+        ParkingLot parkingLot1 = new ParkingLot(0, 10, new HashMap<>(0), new HashMap<>(0));
+        ParkingLot parkingLot2 = new ParkingLot(0, 12, new HashMap<>(0), new HashMap<>(0));
         ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
-        parkingLot1.setCapacity(0);
-        parkingLot2.setCapacity(0);
         parkingLots.add(parkingLot1);
         parkingLots.add(parkingLot2);
         SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
         //when
-        Object parkingTicket = smartParkingBoy.fetchTicketByCar(car);
+        ParkingTicket parkingTicket = smartParkingBoy.fetchTicketByCar(car);
+        //then
+        assertThat(systemOut(), is("Not enough position."));
+        assertThat(parkingTicket, nullValue());
+    }
+
+    @Test
+    public void should_fetch_ticket_give_car_to_super_smart_boy(){
+        //given
+        Car car = new Car("9527");
+        ParkingLot parkingLot1 = new ParkingLot(5, 10, new HashMap<>(0), new HashMap<>(0));
+        ParkingLot parkingLot2 = new ParkingLot(8, 10, new HashMap<>(0), new HashMap<>(0));
+        ParkingLot parkingLot3 = new ParkingLot(9, 10, new HashMap<>(0), new HashMap<>(0));
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
+        parkingLots.add(parkingLot1);
+        parkingLots.add(parkingLot2);
+        parkingLots.add(parkingLot3);
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLots);
+        //when
+        String parkingTicket = superSmartParkingBoy.fetchTicketByCar(car).getCarLicense();
+        //then
+        assertThat(parkingTicket, is("9527"));
+        assertThat(parkingLot3.getCapacity(), is(8));
+    }
+
+    @Test
+    public void should_not_fetch_ticket_give_car_to_super_smart_boy_when_parkinglot_is_all_full(){
+        //given
+        Car car = new Car("9527");
+        ParkingLot parkingLot1 = new ParkingLot(0, 10, new HashMap<>(0), new HashMap<>(0));
+        ParkingLot parkingLot2 = new ParkingLot(0, 12, new HashMap<>(0), new HashMap<>(0));
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
+        parkingLots.add(parkingLot1);
+        parkingLots.add(parkingLot2);
+        SuperSmartParkingBoy superSmartParkingBoy = new SuperSmartParkingBoy(parkingLots);
+        //when
+        ParkingTicket parkingTicket = superSmartParkingBoy.fetchTicketByCar(car);
         //then
         assertThat(systemOut(), is("Not enough position."));
         assertThat(parkingTicket, nullValue());
