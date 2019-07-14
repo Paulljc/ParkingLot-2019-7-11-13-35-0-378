@@ -195,4 +195,42 @@ public class ParkingBoyTest {
         //then
         assertThat(fetchCar.getCarLicense(), is("9527"));
     }
+
+    @Test
+    public void should_fetch_ticket_give_car_to_smart_boy(){
+        //given
+        Car car = new Car("9527");
+        ParkingLot parkingLot1 = new ParkingLot(10, new HashMap<>(0), new HashMap<>(0));
+        ParkingLot parkingLot2 = new ParkingLot(11, new HashMap<>(0), new HashMap<>(0));
+        ParkingLot parkingLot3 = new ParkingLot(12, new HashMap<>(0), new HashMap<>(0));
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
+        parkingLots.add(parkingLot1);
+        parkingLots.add(parkingLot2);
+        parkingLots.add(parkingLot3);
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        //when
+        String parkingTicket = smartParkingBoy.fetchTicketByCar(car).getCarLicense();
+        //then
+        assertThat(parkingTicket, is("9527"));
+        assertThat(parkingLot2.getCapacity(), is(11));
+    }
+
+    @Test
+    public void should_not_fetch_ticket_give_car_to_smart_boy_when_parkinglot_is_full(){
+        //given
+        Car car = new Car("9527");
+        ParkingLot parkingLot1 = new ParkingLot(10, new HashMap<>(0), new HashMap<>(0));
+        ParkingLot parkingLot2 = new ParkingLot(12, new HashMap<>(0), new HashMap<>(0));
+        ArrayList<ParkingLot> parkingLots = new ArrayList<>(1);
+        parkingLot1.setCapacity(0);
+        parkingLot2.setCapacity(0);
+        parkingLots.add(parkingLot1);
+        parkingLots.add(parkingLot2);
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        //when
+        Object parkingTicket = smartParkingBoy.fetchTicketByCar(car);
+        //then
+        assertThat(systemOut(), is("Not enough position."));
+        assertThat(parkingTicket, nullValue());
+    }
 }
